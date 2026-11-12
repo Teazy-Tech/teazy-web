@@ -1,0 +1,9 @@
+.next
+out
+build
+coverage
+pnpm-lock.yaml
+src/store/generated
+src/components/ui
+playwright-report
+test-results

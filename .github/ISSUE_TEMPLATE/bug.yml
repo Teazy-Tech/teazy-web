@@ -1,0 +1,29 @@
+name: Bug
+description: Something in teazy-web doesn't work as expected
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: "1. Go to /lessons  2. ..."
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: Environment and device
+      placeholder: "staging, Android Chrome, 3G"
+  - type: input
+    id: request-id
+    attributes:
+      label: Request ID (from the error message or network tab), if any
+  - type: markdown
+    attributes:
+      value: "Never paste secrets, tokens or real student data."
