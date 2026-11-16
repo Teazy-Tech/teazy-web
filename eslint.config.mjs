@@ -55,10 +55,29 @@ const boundaryRules = {
   },
 };
 
+// Test files may also use the shared helpers in src/test (production code may not).
+const testFiles = ["src/**/__tests__/**/*.{ts,tsx}", "src/**/*.test.{ts,tsx}"];
+const testBoundaryRules = {
+  files: testFiles,
+  rules: {
+    "boundaries/dependencies": [
+      2,
+      {
+        ...boundaryRules.rules["boundaries/dependencies"][1],
+        policies: [
+          ...boundaryRules.rules["boundaries/dependencies"][1].policies,
+          { allow: { to: { element: { type: "test" } } } },
+        ],
+      },
+    ],
+  },
+};
+
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
   boundaryRules,
+  testBoundaryRules,
   {
     // Generated files are never hand-edited, so they are not linted either.
     files: ["src/store/generated/**", "src/components/ui/**"],
