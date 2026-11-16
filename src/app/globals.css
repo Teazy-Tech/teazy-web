@@ -1,22 +1,179 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
 /*
- * Brand tokens (Deep Blue, Dark Orange, Nude, White) and the shadcn/ui theme
- * variables are ported from the legacy app in WEB-01. Until then only the
- * base colours are defined.
+ * Teazy brand tokens: Deep Blue (primary), Dark Orange (accent / CTA),
+ * Nude (warm neutral surfaces), White. Values are ported 1:1 from the legacy
+ * app's src/index.css, so ported components keep their look. Light theme only.
+ *
+ * Use the semantic names in components, not raw colours:
+ *   primary   Deep Blue: main actions, links, focus rings
+ *   cta       Dark Orange: call-to-action buttons and highlights, used sparingly
+ *   secondary / muted   Nude surfaces
+ *   accent    soft Nude tint for hover and highlighted states (shadcn meaning;
+ *             legacy used accent for orange, which turned every hover orange)
+ * Brand aliases (bg-brand-blue, bg-brand-orange, bg-nude) exist for marketing pages.
  */
 :root {
-  --background: #ffffff;
-  --foreground: #13213a;
+  --radius: 0.75rem;
+
+  --background: hsl(0 0% 100%);
+  --foreground: hsl(215 45% 14%);
+  --card: hsl(0 0% 100%);
+  --card-foreground: hsl(215 45% 14%);
+  --popover: hsl(0 0% 100%);
+  --popover-foreground: hsl(215 45% 14%);
+
+  /* Deep Blue: primary brand */
+  --primary: hsl(215 65% 22%);
+  --primary-foreground: hsl(0 0% 100%);
+  --primary-glow: hsl(215 55% 38%);
+
+  /* Deep navy for headings */
+  --navy: hsl(215 65% 18%);
+  --navy-foreground: hsl(0 0% 100%);
+
+  /* Nude: warm neutral surface */
+  --secondary: hsl(32 45% 93%);
+  --secondary-foreground: hsl(215 65% 22%);
+  --muted: hsl(32 30% 96%);
+  --muted-foreground: hsl(215 15% 40%);
+
+  /* Dark Orange: call to action (legacy --accent) */
+  --cta: hsl(24 88% 48%);
+  --cta-foreground: hsl(0 0% 100%);
+
+  /* Hover / highlighted state for menus, outline buttons, list items */
+  --accent: hsl(32 45% 90%);
+  --accent-foreground: hsl(215 65% 22%);
+
+  --success: hsl(160 70% 35%);
+  --success-foreground: hsl(0 0% 100%);
+  --destructive: hsl(0 78% 52%);
+  --destructive-foreground: hsl(0 0% 100%);
+
+  --border: hsl(32 25% 88%);
+  --input: hsl(32 25% 88%);
+  --ring: hsl(215 65% 22%);
+
+  --sidebar: hsl(32 45% 96%);
+  --sidebar-foreground: hsl(215 65% 22%);
+  --sidebar-primary: hsl(215 65% 22%);
+  --sidebar-primary-foreground: hsl(0 0% 100%);
+  --sidebar-accent: hsl(32 45% 92%);
+  --sidebar-accent-foreground: hsl(215 65% 22%);
+  --sidebar-border: hsl(32 25% 88%);
+  --sidebar-ring: hsl(215 65% 22%);
+
+  --gradient-hero: radial-gradient(
+    ellipse 80% 60% at 50% 0%,
+    hsl(24 88% 48% / 0.08),
+    transparent 60%
+  );
+  --gradient-primary: linear-gradient(135deg, hsl(215 65% 22%), hsl(215 55% 38%));
+  --gradient-soft: linear-gradient(180deg, hsl(32 45% 96%), hsl(0 0% 100%));
+  --gradient-cta: linear-gradient(
+    135deg,
+    hsl(215 65% 18%) 0%,
+    hsl(215 65% 28%) 60%,
+    hsl(24 88% 48%) 100%
+  );
 }
 
 @theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-glow: var(--primary-glow);
+  --color-navy: var(--navy);
+  --color-navy-foreground: var(--navy-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-cta: var(--cta);
+  --color-cta-foreground: var(--cta-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Brand aliases */
+  --color-brand-blue: var(--primary);
+  --color-brand-orange: var(--cta);
+  --color-nude: var(--secondary);
+
+  --shadow-soft: 0 1px 2px 0 hsl(215 45% 14% / 0.04), 0 1px 3px 0 hsl(215 45% 14% / 0.06);
+  --shadow-card: 0 4px 24px -6px hsl(215 65% 22% / 0.1), 0 2px 8px -2px hsl(215 45% 14% / 0.04);
+  --shadow-elevated:
+    0 20px 60px -20px hsl(215 65% 22% / 0.25), 0 8px 24px -8px hsl(215 45% 14% / 0.08);
+  --shadow-glow: 0 0 60px hsl(24 88% 48% / 0.3);
+
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
+@utility bg-gradient-hero {
+  background-image: var(--gradient-hero);
+}
+@utility bg-gradient-primary {
+  background-image: var(--gradient-primary);
+}
+@utility bg-gradient-soft {
+  background-image: var(--gradient-soft);
+}
+@utility bg-gradient-cta {
+  background-image: var(--gradient-cta);
+}
+@utility gradient-text {
+  background: var(--gradient-primary);
+  background-clip: text;
+  color: transparent;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading;
+    letter-spacing: -0.02em;
+  }
 }
