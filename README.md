@@ -239,7 +239,24 @@ From the frontend assessment report (F-xx); these shape the shared pieces:
 | `FileUploadField`                                            | Drag/drop + camera; compresses photos on the phone; remove buttons always visible on touch screens     |
 | `ErrorSummary`                                               | Lists field errors at the top for screen readers                                                       |
 
-Validation uses each feature's Zod schema (`<name>.schema.ts`) through `toFormikValidationSchema`. Where possible, schemas mirror the API's request schemas.
+Import everything from `@/components/forms`. A tool form looks like this:
+
+```tsx
+<Form schema={lessonSchema} initialValues={initial} onSubmit={generate} aria-label="Lesson details">
+  <ErrorSummary /> {/* first: lists problems, takes focus on a failed submit */}
+  <TeachingContextFields curricula={curricula} /> {/* curriculumId, classLevel, subjectId */}
+  <TextField name="topic" label="Topic" required />
+  <SubmitButton pendingLabel="Generating lesson…">Generate</SubmitButton>
+</Form>
+```
+
+- Validation runs through the feature's Zod schema (`<name>.schema.ts`, via `zod-formik-adapter`). `onSubmit` receives the **parsed** values, so trimming and defaults are already applied. Where possible, mirror the API's request schema.
+- Pass `required` to a field when the schema requires it. That drives the asterisk and the "Still needed: …" hint, which appears once the teacher starts filling the form.
+- API failures: call `helpers.setStatus({ formError })` with a message chosen by the error `code`, and `ErrorSummary` shows it.
+- `SelectField` is a native `<select>` on purpose, because Android shows its own system picker. Use `ComboboxField` for long, searchable lists (`multiple` for `string[]` values).
+- `FileUploadField` values are `File[]`, already compressed on the phone (JPEG, at most 1600 px). Keep its `accept` list in step with the API's allowlist. Files can't go into `pendingAction`, so teachers re-select them after sign-in.
+- `TeachingContextFields` takes `curricula` as a prop, from the generated `GET /curricula` hook (API-06). Tests use `src/test/fixtures/curricula.ts`.
+- The kit is covered by component tests in `src/components/forms/__tests__/`; its first real users are the auth forms (WEB-04). There is no demo page: each tool PR uses the kit for real.
 
 ### Auth
 
@@ -338,7 +355,7 @@ Still open from setup (OPS-01, Toye): protect `main`, replace the CODEOWNERS pla
 | **OPS-03**  | Rules and contributing docs for both repos; decision records D1–D6                                                                                                                        | Oba      | 1    | M    | OPS-01                  | An intern with only this README and a task ID puts files in the right place. _Drafted; finish = walk-through with each intern + tech-lead approval_                                      |
 | **WEB-01**  | Scaffold: Tailwind **brand tokens**, shadcn/ui ported from legacy, ESLint + boundaries, Vitest + RTL, Playwright, `lib/env.ts`, folders                                                   | Oba      | 1    | M    | OPS-01                  | `pnpm dev/test/lint/typecheck/build` work; Vercel preview per PR. _Done except the Vercel connection (needs org access, OPS-01)_                                                         |
 | **WEB-02**  | Store: `makeStore` + `StoreProvider`, slices (Wk 1); `baseApi` + `pnpm codegen` (Wk 3)                                                                                                    | Oba      | 1, 3 | M    | API-05 (codegen)        | Generated hooks compile against the Prism mock; slices unit-tested; no server data in slices. _Week 1 part done: store, hooks, provider, 4 slices, tests. `baseApi` + codegen in week 3_ |
-| **WEB-03**  | Formik form kit, including `SubmitButton` with missing-field hint, `ErrorSummary`, `FileUploadField`, **`TeachingContextFields`**                                                         | Oba      | 1–2  | L    | WEB-02                  | Keyboard and screen-reader usable; demo page; used unchanged by every later feature                                                                                                      |
+| **WEB-03**  | Formik form kit, including `SubmitButton` with missing-field hint, `ErrorSummary`, `FileUploadField`, **`TeachingContextFields`**                                                         | Oba      | 1–2  | L    | WEB-02                  | Keyboard and screen-reader usable; covered by component tests (instead of a demo page); used unchanged by every later feature                                                            |
 | **WEB-04**  | Auth: `@supabase/ssr`, `src/proxy.ts`, sign-in, sign-up, **forgot/reset password**, Google button, auth-gate modal via `pendingAction`                                                    | Oba      | 2–3  | L    | WEB-02, OPS-02          | Password reset works; an action interrupted by sign-in resumes with the values typed                                                                                                     |
 | **WEB-05**  | App shell: tools sidebar / bottom bar, header, 404 and error pages; marketing pages ported as static pages; no rotating banner on tool pages                                              | Oba      | 3    | M    | WEB-01                  | Every tool reachable in one tap; signed-out visitors can sign up from pricing                                                                                                            |
 | **WEB-10**  | Lessons: form, SSE stream rendering, editor that **saves edits**, text-based PDF/Word export (lazy-loaded), "Saved" status                                                                | Oba      | 3–4  | L    | WEB-03, AI-10           | Edits survive reload; PDF text is selectable; export libraries absent from first load                                                                                                    |
