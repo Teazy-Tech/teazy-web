@@ -10,3 +10,4 @@ export { SignInPanel } from "./SignInPanel";
 export { SignUpForm } from "./SignUpForm";
 export { SignUpPanel } from "./SignUpPanel";
 export { useAuthGate } from "./useAuthGate";
+export { useSignOut } from "./useSignOut";
