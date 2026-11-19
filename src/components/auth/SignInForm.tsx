@@ -47,7 +47,10 @@ export function SignInForm({ next, onSuccess }: { next: string; onSuccess?: () =
         autoComplete="current-password"
         required
       />
-      <SubmitButton pendingLabel="Signing in…" className="sm:w-full">
+      <SubmitButton
+        pendingLabel="Signing in…"
+        className="bg-cta text-cta-foreground hover:bg-cta/90 h-11 sm:w-full"
+      >
         Sign in
       </SubmitButton>
     </Form>

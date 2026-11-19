@@ -4,9 +4,9 @@ import { FAQS } from "../content";
 /** FAQ as native <details>: keyboard and screen-reader friendly with no JavaScript. */
 export function Faq() {
   return (
-    <div className="bg-card shadow-soft mt-10 divide-y rounded-2xl border">
+    <div className="bg-card shadow-soft mt-12 divide-y rounded-2xl border">
       {FAQS.map((item) => (
-        <details key={item.q} className="group px-5 sm:px-6">
+        <details key={item.q} className="group px-6">
           <summary className="text-navy flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 py-4 font-semibold [&::-webkit-details-marker]:hidden">
             {item.q}
             <ChevronDown

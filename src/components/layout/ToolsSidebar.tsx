@@ -9,7 +9,7 @@ import { NavList } from "./NavList";
 export function ToolsSidebar() {
   const signedIn = useAppSelector(selectIsSignedIn);
   return (
-    <aside className="bg-sidebar border-sidebar-border sticky top-16 hidden h-[calc(100svh-4rem)] w-60 shrink-0 overflow-y-auto border-r px-3 py-5 md:block">
+    <aside className="bg-sidebar border-sidebar-border sticky top-[61px] hidden h-[calc(100svh-61px)] w-64 shrink-0 overflow-y-auto border-r p-2 py-4 md:block">
       <nav aria-label="Tools">
         <NavList groups={navGroups(signedIn)} />
       </nav>

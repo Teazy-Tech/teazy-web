@@ -86,7 +86,10 @@ export function ResetPasswordForm() {
         autoComplete="new-password"
         required
       />
-      <SubmitButton pendingLabel="Saving…" className="sm:w-full">
+      <SubmitButton
+        pendingLabel="Saving…"
+        className="bg-cta text-cta-foreground hover:bg-cta/90 h-11 sm:w-full"
+      >
         Save new password
       </SubmitButton>
     </Form>

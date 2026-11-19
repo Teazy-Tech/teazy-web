@@ -8,13 +8,13 @@ import { cn } from "@/lib/utils";
  */
 export function Logo({ href = "/", tone = "light" }: { href?: string; tone?: "light" | "dark" }) {
   return (
-    <Link href={href} className="flex shrink-0 items-center gap-2.5 rounded-md">
-      <span className="flex size-9 items-center justify-center rounded-lg bg-white p-1.5">
+    <Link href={href} className="flex shrink-0 items-center gap-3 rounded-md">
+      <span className="bg-background flex size-9 items-center justify-center rounded-lg p-1.5">
         <Image src="/brand/teazy-mark.png" alt="" width={24} height={28} priority />
       </span>
       <span
         className={cn(
-          "font-heading text-lg font-bold",
+          "font-heading text-lg font-bold sm:text-xl",
           tone === "light" ? "text-navy-foreground" : "text-navy",
         )}
       >

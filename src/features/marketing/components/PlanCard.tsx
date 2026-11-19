@@ -1,4 +1,4 @@
-import { Check, Minus } from "lucide-react";
+import { CheckCircle2, Minus } from "lucide-react";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import type { Plan } from "@/lib/plans";
@@ -23,8 +23,8 @@ export function PlanCard({
     <article
       aria-labelledby={`plan-${plan.id}`}
       className={cn(
-        "bg-card relative flex flex-col rounded-2xl border p-6 sm:p-8",
-        featured && "border-primary shadow-card border-2",
+        "bg-card relative flex flex-col rounded-2xl border p-6 transition-transform duration-300 hover:-translate-y-1.5 sm:p-8",
+        featured && "border-primary shadow-elevated border-2",
         plan.id === "pro" && "border-cta border-2",
       )}
     >
@@ -32,27 +32,41 @@ export function PlanCard({
         <p
           className={cn(
             "absolute -top-3 left-1/2 -translate-x-1/2 rounded-full px-3 py-1 text-[11px] font-bold tracking-wider whitespace-nowrap uppercase",
-            featured ? "bg-primary text-primary-foreground" : "bg-cta text-cta-foreground",
+            featured ? "bg-gradient-primary shadow-glow text-white" : "bg-cta text-cta-foreground",
           )}
         >
           {plan.badge}
         </p>
       )}
-      <h3 id={`plan-${plan.id}`} className="text-navy text-sm font-bold tracking-wider uppercase">
+      <h3
+        id={`plan-${plan.id}`}
+        className={cn(
+          "text-sm font-bold tracking-wider uppercase",
+          plan.id === "free" && "text-muted-foreground",
+          featured && "text-primary",
+          plan.id === "pro" && "text-cta",
+        )}
+      >
         {plan.name}
       </h3>
       <p className="text-muted-foreground mt-1 text-sm">{plan.tagline}</p>
-      <p className="mt-4 flex items-baseline gap-1">
-        <span className="text-navy text-4xl font-bold">{price}</span>
+      <p className="mt-2 flex items-baseline gap-1">
+        <span className="text-navy text-5xl font-bold">{price}</span>
         <span className="text-muted-foreground">/ {plan.period}</span>
       </p>
       {subPrice && <p className="text-muted-foreground mt-1 text-xs">{subPrice}</p>}
       <div className="mt-6">{cta}</div>
-      <ul className="mt-6 flex flex-col gap-2.5 text-sm">
+      <ul className="mt-6 flex flex-col gap-3 text-sm">
         {plan.features.map((feature) => (
           <li key={feature} className="flex items-start gap-2">
-            <Check className="text-primary mt-0.5 size-4 shrink-0" aria-hidden />
-            <span className="text-navy">{feature}</span>
+            <CheckCircle2
+              className={cn(
+                "mt-0.5 size-4 shrink-0",
+                plan.id === "pro" ? "text-cta" : "text-primary",
+              )}
+              aria-hidden
+            />
+            <span className={cn("text-navy", plan.id !== "free" && "font-medium")}>{feature}</span>
           </li>
         ))}
         {plan.limits?.map((limit) => (

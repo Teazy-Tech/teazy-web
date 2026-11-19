@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { PUBLIC_LINKS } from "./nav";
 
@@ -7,49 +8,65 @@ const COMPANY_LINKS = [
   { label: "Blog", href: "https://www.teazytech.org/blog" },
 ] as const;
 
+const heading = "text-navy text-sm font-bold tracking-wider uppercase";
+const link = "text-muted-foreground hover:text-primary text-sm transition-colors";
+
 /**
- * Public footer. Only links that go somewhere real: Privacy and Terms are
- * added when the legal text is published (F-67), never as `href="#"`.
+ * Public footer, styled like the legacy home-page footer. Only links that go
+ * somewhere real: Privacy and Terms are added when the legal text is
+ * published (F-67), and social icons when the accounts are confirmed; never
+ * as `href="#"`.
  */
 export function SiteFooter() {
   return (
     <footer className="bg-secondary/40 border-t">
-      <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-10 sm:flex-row sm:items-start sm:justify-between">
-        <div className="max-w-xs">
-          <p className="text-navy font-semibold">Teazy Tech</p>
-          <p className="text-muted-foreground mt-2 text-sm">
-            The AI teaching assistant built for African classrooms.
-          </p>
+      <div className="mx-auto max-w-6xl px-4 py-16">
+        <div className="grid gap-10 md:grid-cols-4">
+          <div className="md:col-span-2">
+            <div className="flex items-center gap-2.5">
+              <span className="shadow-soft flex size-10 items-center justify-center rounded-xl border bg-white p-1.5">
+                <Image src="/brand/teazy-mark.png" alt="" width={26} height={30} />
+              </span>
+              <p className="text-navy text-lg font-bold">Teazy Tech</p>
+            </div>
+            <p className="text-muted-foreground mt-4 max-w-xs text-sm leading-relaxed">
+              The AI teaching assistant built for African classrooms.
+            </p>
+          </div>
+          <nav aria-label="Footer" className="grid grid-cols-2 gap-10 md:col-span-2">
+            <div>
+              <p className={heading}>Product</p>
+              <ul className="mt-4 flex flex-col gap-3">
+                {PUBLIC_LINKS.map((item) => (
+                  <li key={item.href}>
+                    <Link href={item.href} className={link}>
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <p className={heading}>Company</p>
+              <ul className="mt-4 flex flex-col gap-3">
+                {COMPANY_LINKS.map((item) => (
+                  <li key={item.href}>
+                    <a href={item.href} target="_blank" rel="noopener noreferrer" className={link}>
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </nav>
         </div>
-        <nav aria-label="Footer" className="grid grid-cols-2 gap-8 text-sm">
-          <ul className="flex flex-col gap-2">
-            {PUBLIC_LINKS.map((link) => (
-              <li key={link.href}>
-                <Link href={link.href} className="text-muted-foreground hover:text-primary">
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <ul className="flex flex-col gap-2">
-            {COMPANY_LINKS.map((link) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-primary"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t pt-8 sm:flex-row">
+          <p className="text-muted-foreground text-xs">
+            © Teazy Tech. Empowering teachers with technology.
+          </p>
+          <p className="text-muted-foreground text-xs">Made with care for African classrooms.</p>
+        </div>
       </div>
-      <p className="text-muted-foreground border-t py-4 text-center text-xs">
-        © Teazy Tech. Empowering teachers with technology.
-      </p>
     </footer>
   );
 }

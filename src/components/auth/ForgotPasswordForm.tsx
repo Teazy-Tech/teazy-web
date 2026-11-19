@@ -51,7 +51,10 @@ export function ForgotPasswordForm() {
         inputMode="email"
         required
       />
-      <SubmitButton pendingLabel="Sending…" className="sm:w-full">
+      <SubmitButton
+        pendingLabel="Sending…"
+        className="bg-cta text-cta-foreground hover:bg-cta/90 h-11 sm:w-full"
+      >
         Send reset link
       </SubmitButton>
     </Form>
