@@ -7,11 +7,11 @@ export default function AppLayout({ children }: LayoutProps<"/">) {
   return (
     <>
       <SiteHeader menu={false} />
-      <div className="mx-auto flex w-full max-w-7xl flex-1">
+      <div className="flex w-full flex-1">
         <Suspense>
           <ToolsSidebar />
         </Suspense>
-        <main className="min-w-0 flex-1 px-4 pt-6 pb-24 md:px-8 md:pb-10">{children}</main>
+        <main className="min-w-0 flex-1 px-4 pt-8 pb-24 md:pb-10">{children}</main>
       </div>
       <Suspense>
         <ToolsBottomBar />

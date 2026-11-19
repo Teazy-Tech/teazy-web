@@ -22,7 +22,7 @@ export function DashboardHome() {
       <ToolGroup title="Assess" tools={ASSESS_TOOLS} />
       <p className="text-muted-foreground mt-10 text-sm">
         Everything you save is in{" "}
-        <Link href="/workspace" className="text-primary underline underline-offset-2">
+        <Link href="/workspace" className="text-primary underline">
           My Workspace
         </Link>
         .
@@ -42,13 +42,10 @@ function ToolGroup({ title, tools }: { title: string; tools: readonly NavItem[] 
           <li key={tool.id}>
             <Link
               href={tool.href}
-              className="bg-card hover:border-primary/50 hover:shadow-soft flex h-full gap-3 rounded-xl border p-4 transition"
+              className="bg-card hover:border-primary/50 block h-full rounded-xl border p-4 transition hover:shadow-sm"
             >
-              <tool.icon className="text-primary mt-0.5 size-5 shrink-0" aria-hidden />
-              <span>
-                <span className="text-navy block font-semibold">{tool.label}</span>
-                <span className="text-muted-foreground mt-1 block text-sm">{tool.description}</span>
-              </span>
+              <span className="text-navy block font-semibold">{tool.label}</span>
+              <span className="text-muted-foreground mt-1 block text-sm">{tool.description}</span>
             </Link>
           </li>
         ))}

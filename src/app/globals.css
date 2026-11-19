@@ -150,6 +150,13 @@
 @utility bg-gradient-cta {
   background-image: var(--gradient-cta);
 }
+/* Faint blue grid behind the hero and the closing call to action (legacy .bg-grid). */
+@utility bg-grid {
+  background-image:
+    linear-gradient(hsl(221 83% 53% / 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(221 83% 53% / 0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
 @utility gradient-text {
   background: var(--gradient-primary);
   background-clip: text;

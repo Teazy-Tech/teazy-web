@@ -13,7 +13,7 @@ export default function PricingPage() {
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-12">
       <div className="mb-8 text-center">
-        <h1 className="text-navy text-3xl font-bold sm:text-5xl">
+        <h1 className="text-navy text-3xl font-extrabold sm:text-5xl">
           Simple pricing that grows with you
         </h1>
         <p className="text-muted-foreground mx-auto mt-3 max-w-2xl">

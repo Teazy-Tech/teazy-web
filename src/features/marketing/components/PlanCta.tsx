@@ -23,6 +23,7 @@ export function PlanCta({ plan }: { plan: PlanId }) {
   const signedIn = useAppSelector(selectIsSignedIn);
   const className = cn(
     "h-11 w-full",
+    plan === "standard" && "bg-gradient-primary shadow-glow text-white hover:opacity-90",
     plan === "pro" && "bg-cta text-cta-foreground hover:bg-cta/90",
   );
 

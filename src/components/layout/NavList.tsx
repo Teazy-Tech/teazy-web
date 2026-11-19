@@ -20,12 +20,12 @@ export function NavList({ groups, onNavigate }: { groups: NavGroup[]; onNavigate
   );
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-4">
       {groups.map((group, index) => (
         <section key={group.label} aria-labelledby={`${idPrefix}-${index}`}>
           <p
             id={`${idPrefix}-${index}`}
-            className="text-muted-foreground mb-1 px-3 text-xs font-semibold tracking-wider uppercase"
+            className="text-sidebar-foreground/70 mb-1 flex h-8 items-center px-2 text-xs font-medium tracking-wide uppercase"
           >
             {group.label}
           </p>
@@ -39,9 +39,8 @@ export function NavList({ groups, onNavigate }: { groups: NavGroup[]; onNavigate
                     onClick={onNavigate}
                     aria-current={isCurrent ? "page" : undefined}
                     className={cn(
-                      "text-sidebar-foreground hover:bg-sidebar-accent flex min-h-11 items-center gap-3 rounded-md px-3 text-sm font-medium transition-colors",
-                      isCurrent &&
-                        "bg-sidebar-primary text-sidebar-primary-foreground hover:bg-sidebar-primary",
+                      "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground flex min-h-11 items-center gap-2 rounded-md px-2 text-sm transition-colors md:min-h-9",
+                      isCurrent && "bg-sidebar-accent text-sidebar-accent-foreground font-medium",
                     )}
                   >
                     <item.icon className="size-4 shrink-0" aria-hidden />

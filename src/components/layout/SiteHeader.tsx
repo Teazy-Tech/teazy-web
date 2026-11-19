@@ -11,13 +11,13 @@ import { MobileMenu } from "./MobileMenu";
  */
 export function SiteHeader({ menu = true }: { menu?: boolean }) {
   return (
-    <header className="bg-navy sticky top-0 z-40 h-16 border-b">
-      <div className="mx-auto flex h-full max-w-7xl items-center gap-3 px-4">
+    <header className="bg-navy sticky top-0 z-40 border-b">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3">
         <Logo />
         <Suspense>
           <HeaderNav />
         </Suspense>
-        <div className="ml-auto flex items-center gap-1">
+        <div className="flex items-center gap-1">
           <HeaderAccount />
           {menu && (
             <Suspense>

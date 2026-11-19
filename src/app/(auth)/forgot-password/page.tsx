@@ -7,8 +7,8 @@ export const metadata: Metadata = { title: "Reset your password · Teazy AI" };
 export default function ForgotPasswordPage() {
   return (
     <>
-      <h1 className="text-navy text-2xl font-semibold">Reset your password</h1>
-      <p className="text-muted-foreground mt-1 mb-6 text-sm">
+      <h1 className="text-navy text-center text-2xl font-bold">Reset your password</h1>
+      <p className="text-muted-foreground mt-2 mb-6 text-center text-sm">
         Enter the email you signed up with and we&apos;ll send you a link to choose a new password.
       </p>
       <ForgotPasswordForm />
