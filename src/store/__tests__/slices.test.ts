@@ -26,8 +26,9 @@ describe("makeStore", () => {
     expect(selectIsSignedIn(b.getState())).toBe(false);
   });
 
-  it("holds only the four app-wide slices", () => {
+  it("holds the RTK Query cache plus the four app-wide slices, nothing else", () => {
     expect(Object.keys(makeStore().getState()).sort()).toEqual([
+      "api",
       "pendingAction",
       "session",
       "teachingContext",

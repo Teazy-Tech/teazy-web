@@ -15,6 +15,7 @@ test.describe("auth", () => {
   });
 
   test("sign-in offers Google, email and password reset", async ({ page }) => {
+    test.slow(); // the retry below can outlast the default 30 s under `pnpm dev`
     await page.goto("/sign-in");
     await expect(page.getByRole("button", { name: "Continue with Google" })).toBeVisible();
     await expect(page.getByRole("textbox", { name: /Email/ })).toBeVisible();

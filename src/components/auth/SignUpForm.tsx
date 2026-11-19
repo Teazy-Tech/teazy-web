@@ -88,7 +88,10 @@ export function SignUpForm({ next, onSuccess }: { next: string; onSuccess?: () =
         autoComplete="new-password"
         required
       />
-      <SubmitButton pendingLabel="Creating account…" className="sm:w-full">
+      <SubmitButton
+        pendingLabel="Creating account…"
+        className="bg-cta text-cta-foreground hover:bg-cta/90 h-11 sm:w-full"
+      >
         Create account
       </SubmitButton>
     </Form>

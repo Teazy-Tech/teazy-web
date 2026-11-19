@@ -11,8 +11,8 @@ export const PROTECTED_PREFIXES = ["/dashboard", "/workspace", "/account", "/adm
 /** Sign-in/up pages; signed-in teachers skip straight to `next`. */
 export const AUTH_ONLY_FOR_SIGNED_OUT = ["/sign-in", "/sign-up"] as const;
 
-/** Where a teacher lands after signing in with no `next`. Becomes /dashboard in WEB-05. */
-export const DEFAULT_SIGNED_IN_PATH = "/";
+/** Where a teacher lands after signing in with no `next`. */
+export const DEFAULT_SIGNED_IN_PATH = "/dashboard";
 
 function matchesPrefix(pathname: string, prefix: string) {
   return pathname === prefix || pathname.startsWith(`${prefix}/`);

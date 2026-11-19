@@ -1,14 +1,22 @@
 import { combineSlices, configureStore } from "@reduxjs/toolkit";
+import { setupListeners } from "@reduxjs/toolkit/query";
+import { baseApi } from "./baseApi";
 import { pendingActionSlice } from "./slices/pendingAction";
 import { sessionSlice } from "./slices/session";
 import { teachingContextSlice } from "./slices/teachingContext";
 import { uiSlice } from "./slices/ui";
 
 /**
- * Root reducer. `baseApi` (RTK Query, WEB-02 week 3) is added here with its
- * middleware once codegen lands. Only the slices listed in README §4 belong here.
+ * Root reducer: the RTK Query cache (`baseApi`) plus the UI slices listed in
+ * README §4. Server data lives only in the `api` cache, never in a slice.
  */
-const rootReducer = combineSlices(sessionSlice, teachingContextSlice, uiSlice, pendingActionSlice);
+const rootReducer = combineSlices(
+  baseApi,
+  sessionSlice,
+  teachingContextSlice,
+  uiSlice,
+  pendingActionSlice,
+);
 
 export type RootState = ReturnType<typeof rootReducer>;
 
@@ -18,7 +26,14 @@ export type RootState = ReturnType<typeof rootReducer>;
  * a module: on the server that would share one teacher's state with another.
  */
 export function makeStore(preloadedState?: Partial<RootState>) {
-  return configureStore({ reducer: rootReducer, preloadedState });
+  const store = configureStore({
+    reducer: rootReducer,
+    preloadedState,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(baseApi.middleware),
+  });
+  // Online/offline events for refetchOnReconnect. Browser only.
+  if (typeof window !== "undefined") setupListeners(store.dispatch);
+  return store;
 }
 
 export type AppStore = ReturnType<typeof makeStore>;
